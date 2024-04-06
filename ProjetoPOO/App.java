@@ -17,11 +17,42 @@ import javax.imageio.*;
 
 
 
-
+@SuppressWarnings("unused")
 public class App implements Runnable{
 
     public void run(){
-        JFrame frame = new JFrame("ProjetoPOO");
+        JFrame frame = new JFrame("Hello World");
+        JPanel panel = new JPanel();
+        frame.add(panel);
+        frame.setTitle("Escola");
+        
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
+
+        JMenu fileMenu = new JMenu("Novo");
+        JMenu editMenu = new JMenu("Editar");
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+
+        JMenuItem newAluno = new JMenuItem("Cadastrar Aluno");
+        JMenuItem newTurma = new JMenuItem("Cadastrar Turma");
+        JMenuItem newProfessor = new JMenuItem("Cadastrar Professor");
+
+        JMenuItem editAluno = new JMenuItem("Editar Aluno");
+        JMenuItem editTurma = new JMenuItem("Editar Turma");
+        JMenuItem editProfessor = new JMenuItem("Editar Professor");
+
+        
+        fileMenu.add(newAluno);
+        fileMenu.add(newProfessor);
+        fileMenu.add(newTurma);
+
+        editMenu.add(editAluno);
+        editMenu.add(editProfessor);
+        editMenu.add(editTurma);
+
+        frame.setSize(900, 1000);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
-    
 }
