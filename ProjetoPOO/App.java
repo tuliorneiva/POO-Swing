@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 
 
@@ -16,7 +17,22 @@ public class App implements Runnable{
     public void run(){
         JFrame frame = new JFrame("Hello World");
         JPanel panel = new JPanel();
-        frame.add(panel);
+
+        panel.setLayout(new BorderLayout());
+        JLabel label = new JLabel();
+        panel.add(label);
+        String fileName = "ProjetoPOO/Data/ci.png";
+        File file = new File(fileName);
+				try {
+					BufferedImage img = ImageIO.read(file);
+					ImageIcon icon = new ImageIcon(img);
+					label.setIcon(icon);
+				} catch (IOException e) {
+					System.out.println("Erro na imagem: " + fileName);
+				}
+        frame.add(panel, BorderLayout.CENTER);
+
+
         frame.setTitle("MIT - Mangabeira Institute of Technology");
         
         JMenuBar menuBar = new JMenuBar();
