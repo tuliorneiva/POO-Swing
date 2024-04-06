@@ -8,12 +8,6 @@ import java.io.IOException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//imports para ler a imagem
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.*;
 
 
 
@@ -24,7 +18,7 @@ public class App implements Runnable{
         JFrame frame = new JFrame("Hello World");
         JPanel panel = new JPanel();
         frame.add(panel);
-        frame.setTitle("Escola");
+        frame.setTitle("MIT - Mangabeira Institute of Technology");
         
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
@@ -34,9 +28,37 @@ public class App implements Runnable{
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
 
-        JMenuItem newAluno = new JMenuItem("Cadastrar Aluno");
-        JMenuItem newTurma = new JMenuItem("Cadastrar Turma");
-        JMenuItem newProfessor = new JMenuItem("Cadastrar Professor");
+        JMenuItem newAluno = new JMenuItem("Cadastrar Aluno"); //Criando um popup para a menubar Cadastrar Aluno
+        newAluno.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Cadastrar Aluno");
+                JPanel panel = new JPanel();
+                frame.add(panel);
+                frame.setSize(500, 500);
+                frame.setVisible(true);
+            }
+        });
+
+        JMenuItem newTurma = new JMenuItem("Cadastrar Turma"); //Criando um popup para a menubar Cadastrar Turma
+        newTurma.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Cadastrar Turma");
+                JPanel panel = new JPanel();
+                frame.add(panel);
+                frame.setSize(500, 500);
+                frame.setVisible(true);
+            }
+        });
+        JMenuItem newProfessor = new JMenuItem("Cadastrar Professor"); //Criando um popup para a menubar Cadastrar Professor
+        newProfessor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Cadastrar Professor");
+                JPanel panel = new JPanel();
+                frame.add(panel);
+                frame.setSize(500, 500);
+                frame.setVisible(true);
+            }
+        });
 
         JMenuItem editAluno = new JMenuItem("Editar Aluno");
         JMenuItem editTurma = new JMenuItem("Editar Turma");
