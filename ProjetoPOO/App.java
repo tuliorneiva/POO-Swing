@@ -21,11 +21,12 @@ public class App implements Runnable{
         panel.setLayout(new BorderLayout());
         JLabel label = new JLabel();
         panel.add(label);
-        String fileName = "ProjetoPOO/Data/ci.png";
+        String fileName = "ProjetoPOO/Data/MIT2.png"; //Adicionando uma imagem de fundo para o menu principal
         File file = new File(fileName);
 				try {
 					BufferedImage img = ImageIO.read(file);
-					ImageIcon icon = new ImageIcon(img);
+					Image resizedImage = img.getScaledInstance(1000, 1000, Image.SCALE_SMOOTH);
+                    ImageIcon icon = new ImageIcon(resizedImage);
 					label.setIcon(icon);
 				} catch (IOException e) {
 					System.out.println("Erro na imagem: " + fileName);
@@ -132,7 +133,7 @@ public class App implements Runnable{
         editMenu.add(editProfessor);
         editMenu.add(editTurma);
 
-        frame.setSize(900, 1000);
+        frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
