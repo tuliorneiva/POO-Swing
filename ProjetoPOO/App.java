@@ -3,7 +3,9 @@ package ProjetoPOO;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -85,6 +87,30 @@ public class App implements Runnable{
                 JTextField TurmaProfessor = new JTextField();
 
                 JButton Cadastrar = new JButton("Cadastrar");
+                Cadastrar.addActionListener(new ActionListener() { // Adicionando um evento ao botão Cadastrar que Salva o nome do professor em um arquivo file.txt
+                    public void actionPerformed(ActionEvent e) {
+                        String nome = NomeTurma.getText();
+                        String professor = TurmaProfessor.getText();
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("file.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            dataOutputStream.writeUTF(nome);
+                            dataOutputStream.writeUTF(professor);
+                            System.out.println(nome);
+                            // Fechar o DataOutputStream
+                            dataOutputStream.close();
+                            
+                            System.out.println("Dados foram escritos no arquivo com sucesso.");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
                 JButton Cancelar = new JButton("Cancelar");
                 panel.add(labelT1);
                 panel.add(NomeTurma);
@@ -109,7 +135,34 @@ public class App implements Runnable{
                 JTextField NomeProfessor = new JTextField();
 
                 JButton Cadastrar = new JButton("Cadastrar");
+                Cadastrar.addActionListener(new ActionListener() { // Adicionando um evento ao botão Cadastrar que Salva o nome do professor em um arquivo file.txt
+                    public void actionPerformed(ActionEvent e) {
+                        String nome = NomeProfessor.getText();
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("file.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            dataOutputStream.writeUTF(nome);
+                            System.out.println(nome);
+                            // Fechar o DataOutputStream
+                            dataOutputStream.close();
+                            
+                            System.out.println("Dados foram escritos no arquivo com sucesso.");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
                 JButton Cancelar = new JButton("Cancelar");
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    }
+                });
                 panel.add(labelP1);
                 panel.add(NomeProfessor);
                 panel.add(Cadastrar);
