@@ -24,7 +24,7 @@ public class Aluno {
         } while (codigosUtilizados.contains(codigoAluno));
         
         codigosUtilizados.add(codigoAluno); // Adiciona o novo código ao conjunto de códigos utilizados
-    }
+    } 
     
 
     public String getNome() {
