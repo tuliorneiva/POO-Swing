@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Professor{
     private String nome;
-    private int codigo;
+    private int codigoProfessor;
     private ArrayList<String> materias = new ArrayList<String>();
     private ArrayList<String> turmas = new ArrayList<String>();
 
@@ -13,7 +13,7 @@ public class Professor{
         this.nome = nome;
         this.turmas = turmas;
         this.materias = materias;
-        this.codigo = random.nextInt(1000);
+        this.codigoProfessor = random.nextInt(1000);
     }
 
     public ArrayList<String> getMaterias() {
@@ -31,8 +31,8 @@ public class Professor{
         return nome;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getCodigoProfessor() {
+        return codigoProfessor;
     }
 
     // setters?

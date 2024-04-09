@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Turmas {
-    private int codigo;
+    private int codigoTurmas;
     private ArrayList<String> materias = new ArrayList<>();
     private ArrayList<Aluno> alunos = new ArrayList<>();
     private Professor professor;
@@ -12,7 +12,8 @@ public class Turmas {
 
     public Turmas(){
         Random random = new Random();
-        this.codigo = random.nextInt();
+        this.codigoTurmas = random.nextInt();
+
     }
 
     public void adicionarProfessor(Professor professor){
@@ -35,8 +36,16 @@ public class Turmas {
         return professor;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getCodigoProfessor() {
+        return codigoProfessor;
+    }
+
+    public int getCodigoAluno(){
+        return codigoAluno;
+    }
+
+    public int getCodigoTurmas(){
+        return codigoTurmas;
     }
 
 }
