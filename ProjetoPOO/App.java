@@ -189,7 +189,7 @@ public class App implements Runnable{
 
         JMenuItem consultAlunos = new JMenuItem("Consultar Alunos");
         JMenuItem consultTurmas = new JMenuItem("Consultar Turmas");
-        JMenuItem consultProfessores = new JMenuItem("Consultar Professores");
+        JMenuItem consultProfessores = new JMenuItem("Consultar Professores"); //Classe anônima para implementar o actionlistener de visualizar os professores
         consultProfessores.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 JFrame frame = new JFrame("Consultar Professores");
