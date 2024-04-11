@@ -39,7 +39,7 @@ public class Aluno {
         return materiasCursadas;
     }
 
-    public int codigoAluno(){
+    public int getCodigoAluno(){
         return codigoAluno;
     }
 }

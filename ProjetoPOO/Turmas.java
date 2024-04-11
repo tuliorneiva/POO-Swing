@@ -37,11 +37,11 @@ public class Turmas {
     }
 
     public int getCodigoProfessor() {
-        return codigoProfessor;
+        return professor.getCodigoProfessor();
     }
 
-    public int getCodigoAluno(){
-        return codigoAluno;
+    public Aluno getCodigoAluno(Aluno a){
+        return alunos.get(a.getCodigoAluno());
     }
 
     public int getCodigoTurmas(){
