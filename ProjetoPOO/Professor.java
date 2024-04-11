@@ -1,30 +1,18 @@
 package ProjetoPOO;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Professor{
+public class Professor implements Serializable {
+    private static final long serialVersionUID = 42;    
     private String nome;
     private int codigoProfessor;
-    private ArrayList<String> materias = new ArrayList<String>();
-    private ArrayList<String> turmas = new ArrayList<String>();
 
-    public Professor(String nome, ArrayList<String> turmas, ArrayList<String> materias){
+    public Professor() {}
+
+    public Professor(String nome){
         Random random = new Random();
         this.nome = nome;
-        this.turmas = turmas;
-        this.materias = materias;
         this.codigoProfessor = random.nextInt(1000);
-    }
-
-    public ArrayList<String> getMaterias() {
-        // for(int i = 0; i < materias.size(); i++){
-        //     materias´.get(i);
-        // }
-        return materias;
-    }
-
-    public ArrayList<String> getTurmas() {
-        return turmas;
     }
 
     public String getNome() {
@@ -33,6 +21,10 @@ public class Professor{
 
     public int getCodigoProfessor() {
         return codigoProfessor;
+    }
+
+    public String toString(){
+        return "Nome: " + nome + "Código: " + codigoProfessor + "\n";
     }
 
     // setters?
