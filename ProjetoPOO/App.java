@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -17,6 +18,8 @@ import java.awt.image.BufferedImage;
 public class App implements Runnable{
 
     public void run(){
+        Faculdade.loadProfessores();
+        System.out.println(Faculdade.getProfessores());
         JFrame frame = new JFrame("Hello World");
         JPanel panel = new JPanel();
 
@@ -138,18 +141,20 @@ public class App implements Runnable{
                 Cadastrar.addActionListener(new ActionListener() { // Adicionando um evento ao botão Cadastrar que Salva o nome do professor em um arquivo file.txt
                     public void actionPerformed(ActionEvent e) {
                         String nome = NomeProfessor.getText();
+                        Professor professor = new Professor(nome);
+                        Faculdade.addProfessor(professor);
                         try {
                             // Criar um FileOutputStream para escrever dados em um arquivo
                             FileOutputStream fileOutputStream = new FileOutputStream("file.txt");
         
                             // Criar um DataOutputStream usando o FileOutputStream
-                            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
                             
                             // Escrever dados no arquivo usando métodos do DataOutputStream
-                            dataOutputStream.writeUTF(nome);
-                            System.out.println(nome);
+                            objeto.writeObject(Faculdade.getProfessores());
+                            System.out.println(professor);
                             // Fechar o DataOutputStream
-                            dataOutputStream.close();
+                            objeto.close();
                             
                             System.out.println("Dados foram escritos no arquivo com sucesso.");
                         } catch (IOException ex) {
