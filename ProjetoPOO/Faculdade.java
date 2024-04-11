@@ -8,8 +8,7 @@ public class Faculdade {
     private static ArrayList<Aluno> alunos = new ArrayList<>();
     private static ArrayList<Professor> professores = new ArrayList<>();
     private static ArrayList<Turmas> turmas = new ArrayList<>();
-
-
+    //adicionar o arraylist de códigos utilizados aqui
 
     public static void addAluno(Aluno aluno){
         alunos.add(aluno);

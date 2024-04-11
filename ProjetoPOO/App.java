@@ -2,12 +2,15 @@ package ProjetoPOO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -46,8 +49,10 @@ public class App implements Runnable{
 
         JMenu fileMenu = new JMenu("Novo");
         JMenu editMenu = new JMenu("Editar");
+        JMenu viewMenu = new JMenu("Visualizar");
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
+        menuBar.add(viewMenu);
 
         JMenuItem newAluno = new JMenuItem("Cadastrar Aluno"); //Criando um popup para a menubar Cadastrar Aluno
         newAluno.addActionListener(new ActionListener() {
@@ -182,6 +187,24 @@ public class App implements Runnable{
         JMenuItem editTurma = new JMenuItem("Editar Turma");
         JMenuItem editProfessor = new JMenuItem("Editar Professor");
 
+        JMenuItem consultAlunos = new JMenuItem("Consultar Alunos");
+        JMenuItem consultTurmas = new JMenuItem("Consultar Turmas");
+        JMenuItem consultProfessores = new JMenuItem("Consultar Professores");
+        consultProfessores.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                JFrame frame = new JFrame("Consultar Professores");
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                for(Professor professor : Faculdade.getProfessores()){
+                    JLabel label = new JLabel(professor.toString());
+                    panel.add(label);
+                }
+                frame.add(panel);
+                frame.setSize(500, 500);
+                frame.setVisible(true);
+            }
+        });
+
         
         fileMenu.add(newAluno);
         fileMenu.add(newProfessor);
@@ -190,6 +213,10 @@ public class App implements Runnable{
         editMenu.add(editAluno);
         editMenu.add(editProfessor);
         editMenu.add(editTurma);
+
+        viewMenu.add(consultAlunos);
+        viewMenu.add(consultProfessores);
+        viewMenu.add(consultTurmas);
 
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
