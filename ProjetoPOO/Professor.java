@@ -5,22 +5,20 @@ import java.util.Random;
 public class Professor{
     private String nome;
     private int codigo;
-    private ArrayList<String> materias = new ArrayList<String>();
+    private String materia;
     private ArrayList<String> turmas = new ArrayList<String>();
 
-    public Professor(String nome, ArrayList<String> turmas, ArrayList<String> materias){
+    public Professor(String nome, ArrayList<String> turmas, String materia){
         Random random = new Random();
         this.nome = nome;
         this.turmas = turmas;
-        this.materias = materias;
+        this.materia = materia;
         this.codigo = random.nextInt(1000);
     }
 
-    public ArrayList<String> getMaterias() {
-        // for(int i = 0; i < materias.size(); i++){
-        //     materias´.get(i);
-        // }
-        return materias;
+    public String getMateria() {
+        
+        return materia;
     }
 
     public ArrayList<String> getTurmas() {
