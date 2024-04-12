@@ -6,6 +6,7 @@ public class Professor implements Serializable {
     private static final long serialVersionUID = 42;    
     private String nome;
     private int codigoProfessor;
+    
 
     public Professor(){}
 
@@ -26,6 +27,4 @@ public class Professor implements Serializable {
     public String toString(){
         return "Nome: " + nome + " Código: " + codigoProfessor + "\n";
     }
-
-    // setters?
 }

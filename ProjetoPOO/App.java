@@ -22,6 +22,7 @@ public class App implements Runnable{
 
     public void run(){
         Faculdade.loadProfessores();
+        Faculdade.loadTurmas();
         System.out.println(Faculdade.getProfessores());
         JFrame frame = new JFrame("Hello World");
         JPanel panel = new JPanel();
@@ -89,29 +90,27 @@ public class App implements Runnable{
                 panel.setLayout(new GridLayout(0,2,5,5));
 
                 JLabel labelT1 = new JLabel("Turma:");
-                JLabel labelT2 = new JLabel("Professor:");
 
                 JTextField NomeTurma = new JTextField();
-                JTextField TurmaProfessor = new JTextField();
 
                 JButton Cadastrar = new JButton("Cadastrar");
                 Cadastrar.addActionListener(new ActionListener() { // Adicionando um evento ao botão Cadastrar que Salva o nome do professor em um arquivo file.txt
                     public void actionPerformed(ActionEvent e) {
                         String nome = NomeTurma.getText();
-                        String professor = TurmaProfessor.getText();
+                        Turmas turma = new Turmas(nome);
+                        Faculdade.addTurma(turma);
                         try {
                             // Criar um FileOutputStream para escrever dados em um arquivo
-                            FileOutputStream fileOutputStream = new FileOutputStream("file.txt");
+                            FileOutputStream fileOutputStream = new FileOutputStream("Turmas.txt");
         
                             // Criar um DataOutputStream usando o FileOutputStream
-                            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
                             
                             // Escrever dados no arquivo usando métodos do DataOutputStream
-                            dataOutputStream.writeUTF(nome);
-                            dataOutputStream.writeUTF(professor);
-                            System.out.println(nome);
+                            objeto.writeObject(Faculdade.getTurmas());
+                            System.out.println(turma);
                             // Fechar o DataOutputStream
-                            dataOutputStream.close();
+                            objeto.close();
                             
                             System.out.println("Dados foram escritos no arquivo com sucesso.");
                         } catch (IOException ex) {
@@ -122,12 +121,10 @@ public class App implements Runnable{
                 JButton Cancelar = new JButton("Cancelar");
                 panel.add(labelT1);
                 panel.add(NomeTurma);
-                panel.add(labelT2);
-                panel.add(TurmaProfessor);
                 panel.add(Cadastrar);
                 panel.add(Cancelar);
                 frame.add(panel);
-                frame.setSize(500, 250);
+                frame.setSize(500, 100);
                 frame.setVisible(true);
             }
         });
@@ -150,7 +147,7 @@ public class App implements Runnable{
                         Faculdade.addProfessor(professor);
                         try {
                             // Criar um FileOutputStream para escrever dados em um arquivo
-                            FileOutputStream fileOutputStream = new FileOutputStream("file.txt");
+                            FileOutputStream fileOutputStream = new FileOutputStream("Professores.txt");
         
                             // Criar um DataOutputStream usando o FileOutputStream
                             ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
