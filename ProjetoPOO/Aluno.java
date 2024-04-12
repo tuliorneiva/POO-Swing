@@ -1,5 +1,6 @@
 package ProjetoPOO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -7,12 +8,14 @@ import java.util.Random;
 import java.util.Set;
 
 
-public class Aluno {
+public class Aluno implements Serializable{
     private String nome;
     private ArrayList<String> materiasCursadas;
     private ArrayList<Float> notas;
     private static Set<Integer> codigosUtilizados = new HashSet<>();
     private int codigoAluno;
+
+    public Aluno(){}
 
     public Aluno(String nome, Float[] notas, String[] materias) {
         Random random = new Random();
