@@ -8,6 +8,7 @@ import java.util.Set;
 
 
 public class Aluno implements Serializable{
+    private static final long serialVersionUID = 44;
     private String nome;
     private ArrayList<String> materiasCursadas;
     private ArrayList<Nota> notas;
