@@ -23,6 +23,9 @@ public class App implements Runnable{
     public void run(){
         Faculdade.loadProfessores();
         Faculdade.loadTurmas();
+        Faculdade.loadAlunos();
+        System.out.println(Faculdade.getTurmas());
+        System.out.println(Faculdade.getAlunos());
         System.out.println(Faculdade.getProfessores());
         JFrame frame = new JFrame("Hello World");
         JPanel panel = new JPanel();
@@ -63,22 +66,49 @@ public class App implements Runnable{
                 panel.setLayout(new GridLayout(0,2,5,5));
 
                 JLabel labela1 = new JLabel("Nome do Aluno:");
-                JLabel labela2 = new JLabel("Turma:");
-
+                
                 JTextField NomeAluno = new JTextField();
-                JTextField TurmaAluno = new JTextField();
-
+    
                 JButton Cadastrar = new JButton("Cadastrar");
                 JButton Cancelar = new JButton("Cancelar");
                 panel.add(labela1);
                 panel.add(NomeAluno);
-                panel.add(labela2);
-                panel.add(TurmaAluno);
                 panel.add(Cadastrar);
                 panel.add(Cancelar);
                 frame.add(panel);
                 frame.setSize(500, 250);
                 frame.setVisible(true);
+
+                Cadastrar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        String nome = NomeAluno.getText();
+                        Aluno aluno = new Aluno(nome);
+                        Faculdade.addAluno(aluno);
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("Alunos.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            objeto.writeObject(Faculdade.getAlunos());
+                            System.out.println(aluno);
+                            // Fechar o DataOutputStream
+                            objeto.close();
+                            
+                            System.out.println("Dados foram escritos no arquivo com sucesso.");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    }
+                });
             }
         });
 

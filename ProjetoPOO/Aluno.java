@@ -17,11 +17,9 @@ public class Aluno implements Serializable{
 
     public Aluno(){}
 
-    public Aluno(String nome, Float[] notas, String[] materias) {
+    public Aluno(String nome) {
         Random random = new Random();
         this.nome = nome;
-        this.materiasCursadas = new ArrayList<>(Arrays.asList(materias)); // Converte o array em ArrayList
-        this.notas = new ArrayList<>(Arrays.asList(notas)); // Converte o array em ArrayList
         do {
             this.codigoAluno = random.nextInt(1000); // Gera um número aleatório entre 0 e 999
         } while (codigosUtilizados.contains(codigoAluno));
@@ -68,6 +66,10 @@ public class Aluno implements Serializable{
         if(index != -1){
             notas.set(index, nota);
         }
+    }
+
+    public String toString(){
+        return "Nome: " + nome + " - Código: " + codigoAluno;
     }
 }
 // Criar classe notasmaterias que vai conter um arraylist notasmaterias onde cada elemento é um objeto com as notas de um aluno em uma matéria

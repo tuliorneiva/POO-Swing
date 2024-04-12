@@ -103,4 +103,16 @@ public class Faculdade {
             e.printStackTrace();
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public static void loadAlunos() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("alunos.txt"); // Use o nome correto do arquivo
+            ObjectInputStream dataInputStream = new ObjectInputStream(fileInputStream);
+            alunos = (ArrayList<Aluno>) dataInputStream.readObject();
+            dataInputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
