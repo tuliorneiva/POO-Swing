@@ -21,12 +21,12 @@ public class Aluno implements Serializable{
         this.notas = new ArrayList<>();
         for (Nota nota : notas) {
             this.notas.add(nota);
+        } 
         do {
             this.codigoAluno = random.nextInt(1000); // Gera um número aleatório entre 0 e 999
         } while (codigosUtilizados.contains(codigoAluno));
         
         codigosUtilizados.add(codigoAluno); // Adiciona o novo código ao conjunto de códigos utilizados
-    } 
      
 }  
 

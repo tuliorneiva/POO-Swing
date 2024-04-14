@@ -215,7 +215,35 @@ public class App implements Runnable{
         JMenuItem editProfessor = new JMenuItem("Editar Professor");
 
         JMenuItem consultAlunos = new JMenuItem("Consultar Alunos");
+        consultAlunos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                JFrame frame = new JFrame("Consultar Alunos");
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                for(Aluno aluno : Faculdade.getAlunos()){
+                    JLabel label = new JLabel(aluno.toString());
+                    panel.add(label);
+                }
+                frame.add(panel);
+                frame.setSize(500, 500);
+                frame.setVisible(true);
+            }
+        });
         JMenuItem consultTurmas = new JMenuItem("Consultar Turmas");
+        consultTurmas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                JFrame frame = new JFrame("Consultar Turmas");
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                for(Turmas turmas : Faculdade.getTurmas()){
+                    JLabel label = new JLabel(turmas.toString());
+                    panel.add(label);
+                }
+                frame.add(panel);
+                frame.setSize(500, 500);
+                frame.setVisible(true);
+            }
+        });
         JMenuItem consultProfessores = new JMenuItem("Consultar Professores"); //Classe anônima para implementar o actionlistener de visualizar os professores
         consultProfessores.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){

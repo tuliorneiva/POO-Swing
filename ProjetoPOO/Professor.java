@@ -25,6 +25,6 @@ public class Professor implements Serializable {
     }
 
     public String toString(){
-        return "Nome: " + nome + " Código: " + codigoProfessor + "\n";
+        return "Nome: " + nome + " - Código: " + codigoProfessor;
     }
 }
