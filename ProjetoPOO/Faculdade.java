@@ -14,6 +14,10 @@ public class Faculdade {
         alunos.add(aluno);
     }
 
+    public static void removeAluno(Aluno aluno){
+        alunos.remove(aluno);
+    }
+
     public static void addProfessor(Professor professor){
         professores.add(professor);
     }
