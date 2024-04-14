@@ -54,9 +54,11 @@ public class App implements Runnable{
         JMenu fileMenu = new JMenu("Novo");
         JMenu editMenu = new JMenu("Editar");
         JMenu viewMenu = new JMenu("Visualizar");
+        JMenu addMenu = new JMenu("Adicionar");
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         menuBar.add(viewMenu);
+        menuBar.add(addMenu);
 
         JMenuItem newAluno = new JMenuItem("Cadastrar Aluno"); //Criando um popup para a menubar Cadastrar Aluno
         newAluno.addActionListener(new ActionListener() {
@@ -265,6 +267,71 @@ public class App implements Runnable{
             }
         });
 
+        JMenuItem addAlunoT = new JMenuItem("Adicionar Aluno a Turma"); // Adicionando um aluno a uma turma
+        addAlunoT.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                JFrame frame = new JFrame("Adicionar Aluno a Turma");
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(0,2,5,5));
+
+                JLabel labelA1 = new JLabel("Código do Aluno:");
+                JTextField CodigoAluno = new JTextField();
+                JLabel labelA2 = new JLabel("Código da Turma:");
+                JTextField CodigoTurma = new JTextField();
+                JLabel labelA3 = new JLabel("Turmas:");
+                for(Turmas turmas : Faculdade.getTurmas()){
+                    JLabel label = new JLabel(turmas.toString());
+                    panel.add(label);
+                }
+
+                JButton Adicionar = new JButton("Adicionar");
+                Adicionar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int codigoAluno = Integer.parseInt(CodigoAluno.getText());
+                        int codigoTurma = Integer.parseInt(CodigoTurma.getText());
+                        Aluno aluno = Faculdade.getAluno(codigoAluno);
+                        Turmas turma = Faculdade.getTurma(codigoTurma);
+                        turma.adicionarAluno(aluno);
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("Turmas.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            objeto.writeObject(Faculdade.getTurmas());
+                            System.out.println(aluno);
+                            // Fechar o DataOutputStream
+                            objeto.close();
+                            
+                            System.out.println("Dados foram escritos no arquivo com sucesso.");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+                JButton Cancelar = new JButton("Cancelar");
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.dispose();
+                    }
+                });
+                panel.add(labelA1);
+                panel.add(CodigoAluno);
+                panel.add(labelA2);
+                panel.add(CodigoTurma);
+                panel.add(Adicionar);
+                panel.add(Cancelar);
+                frame.add(panel);
+                frame.setSize(500, 100);
+                frame.setVisible(true);
+            }
+        });
+
+        JMenuItem addProfessorT = new JMenuItem("Adicionar Professor a Turma");
+        JMenuItem addNota = new JMenuItem("Adicionar Nota a aluno");
+
         
         fileMenu.add(newAluno);
         fileMenu.add(newProfessor);
@@ -277,6 +344,11 @@ public class App implements Runnable{
         viewMenu.add(consultAlunos);
         viewMenu.add(consultProfessores);
         viewMenu.add(consultTurmas);
+
+        addMenu.add(addAlunoT);
+        addMenu.add(addProfessorT);
+        addMenu.add(addNota);
+
 
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -22,8 +22,16 @@ public class Faculdade {
         professores.add(professor);
     }
 
+    public static void removeProfessor(Professor professor){
+        professores.remove(professor);
+    }
+
     public static void addTurma(Turmas turma){
         turmas.add(turma);
+    }
+
+    public static void removeTurma(Turmas turma){
+        turmas.remove(turma);
     }
 
     public static ArrayList<Aluno> getAlunos(){
@@ -51,6 +59,15 @@ public class Faculdade {
         for(Professor professor : professores){
             if(professor.getCodigoProfessor() == codigo){
                 return professor;
+            }
+        }
+        return null;
+    }
+
+    public static Turmas getTurma(int codigo){
+        for(Turmas turma : turmas){
+            if(turma.getCodigoTurmas() == codigo){
+                return turma;
             }
         }
         return null;
