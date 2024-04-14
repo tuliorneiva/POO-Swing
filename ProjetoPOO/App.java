@@ -76,7 +76,7 @@ public class App implements Runnable{
                 panel.add(Cadastrar);
                 panel.add(Cancelar);
                 frame.add(panel);
-                frame.setSize(500, 250);
+                frame.setSize(500, 100);
                 frame.setVisible(true);
 
                 Cadastrar.addActionListener(new ActionListener() {
@@ -106,7 +106,7 @@ public class App implements Runnable{
 
                 Cancelar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        frame.dispose();
                     }
                 });
             }
@@ -149,6 +149,11 @@ public class App implements Runnable{
                     }
                 });
                 JButton Cancelar = new JButton("Cancelar");
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.dispose();
+                    }
+                });
                 panel.add(labelT1);
                 panel.add(NomeTurma);
                 panel.add(Cadastrar);
@@ -197,7 +202,7 @@ public class App implements Runnable{
                 JButton Cancelar = new JButton("Cancelar");
                 Cancelar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        frame.dispose();
                     }
                 });
                 panel.add(labelP1);
