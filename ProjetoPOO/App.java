@@ -346,8 +346,19 @@ public class App implements Runnable{
                         JFrame frame = new JFrame("Consultar Turmas");
                         JPanel panel = new JPanel();
                         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                        for(Turmas turmas : Faculdade.getTurmas()){
-                            JLabel label = new JLabel(turmas.toString());
+                        for (Turmas turmas : Faculdade.getTurmas()) {
+                            String nomeTurma = turmas.getNomeTurma();
+                            Integer codigoTurma = turmas.getCodigoTurmas();
+                            ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
+                            String stringFinal = String.format("<html>%s - Código: %d <br> Lista de Alunos: <br>", nomeTurma, codigoTurma);
+                            
+                            for (Aluno aluno : listaDeAlunos) {
+                                stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
+                            }
+                            
+                            stringFinal += "<br></html>";
+                            
+                            JLabel label = new JLabel(stringFinal);
                             panel.add(label);
                         }
                         frame.add(panel);
@@ -389,6 +400,8 @@ public class App implements Runnable{
         addMenu.add(addAlunoT);
         addMenu.add(addProfessorT);
         addMenu.add(addNota);
+
+        // removeMenu.add();
 
 
         frame.setSize(1000, 1000);
