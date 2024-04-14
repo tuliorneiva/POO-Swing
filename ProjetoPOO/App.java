@@ -278,11 +278,6 @@ public class App implements Runnable{
                 JTextField CodigoAluno = new JTextField();
                 JLabel labelA2 = new JLabel("Código da Turma:");
                 JTextField CodigoTurma = new JTextField();
-                JLabel labelA3 = new JLabel("Turmas:");
-                for(Turmas turmas : Faculdade.getTurmas()){
-                    JLabel label = new JLabel(turmas.toString());
-                    panel.add(label);
-                }
 
                 JButton Adicionar = new JButton("Adicionar");
                 Adicionar.addActionListener(new ActionListener() {
@@ -317,14 +312,49 @@ public class App implements Runnable{
                         frame.dispose();
                     }
                 });
+
+                JButton ConsultarA = new JButton("Consultar Alunos");
+                ConsultarA.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        JFrame frame = new JFrame("Consultar Alunos");
+                        JPanel panel = new JPanel();
+                        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                        for(Aluno aluno : Faculdade.getAlunos()){
+                            JLabel label = new JLabel(aluno.toString());
+                            panel.add(label);
+                        }
+                        frame.add(panel);
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+                    }
+                });
+
+                JButton ConsultarT = new JButton("Consultar Turmas");
+                ConsultarT.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        JFrame frame = new JFrame("Consultar Turmas");
+                        JPanel panel = new JPanel();
+                        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                        for(Turmas turmas : Faculdade.getTurmas()){
+                            JLabel label = new JLabel(turmas.toString());
+                            panel.add(label);
+                        }
+                        frame.add(panel);
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+                    }
+                });
+
                 panel.add(labelA1);
                 panel.add(CodigoAluno);
                 panel.add(labelA2);
                 panel.add(CodigoTurma);
                 panel.add(Adicionar);
                 panel.add(Cancelar);
+                panel.add(ConsultarA);
+                panel.add(ConsultarT);
                 frame.add(panel);
-                frame.setSize(500, 100);
+                frame.setSize(500, 300);
                 frame.setVisible(true);
             }
         });
