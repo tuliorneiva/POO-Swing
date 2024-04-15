@@ -42,12 +42,21 @@ public class Turmas implements Serializable {
         return this.codigoProfessor = codigoProfessor;
     }
 
+    public int getCodigoProfessor() {
+        return codigoProfessor;
+    }
+
     public int getCodigoTurmas(){
         return codigoTurmas;
     }
 
     public String getNomeTurma(){
         return nomeTurma;
+    }
+
+
+    public boolean hasAluno(Aluno aluno) {
+        return alunos.contains(aluno);
     }
 
     @Override

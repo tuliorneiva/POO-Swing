@@ -85,6 +85,18 @@ public class Aluno implements Serializable{
             }
         }
     }
+
+    @Override
+    public boolean equals(Object obj) { // Método equals para comparar objetos do tipo Aluno. Pois sem ele, o tratamento de aluno já existente não funcionava.
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Aluno aluno = (Aluno) obj;
+        return codigoAluno == aluno.codigoAluno;
+    }
   
 
     public String toString(){

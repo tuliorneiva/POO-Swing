@@ -83,7 +83,24 @@ public class App implements Runnable{
 
                 Cadastrar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
-                        String nome = NomeAluno.getText();
+                        String nome = NomeAluno.getText(); 
+                        if (nome.equals("")) { // Tratamento de erros
+                            JOptionPane.showMessageDialog(frame, "Nome do aluno não pode ser vazio.");
+                            return;
+                        }
+                        else if (nome.length() > 50) {
+                            JOptionPane.showMessageDialog(frame, "Nome do aluno não pode ter mais de 50 caracteres.");
+                            return;
+                        }
+                        else if (nome.length() < 3) {
+                            JOptionPane.showMessageDialog(frame, "Nome do aluno não pode ter menos de 3 caracteres.");
+                            return;
+                        }
+
+                        else if (nome.equals(" ")) {
+                            JOptionPane.showMessageDialog(frame, "Nome do aluno não pode ser vazio.");
+                            return;
+                        }
                         Aluno aluno = new Aluno(nome);
                         Faculdade.addAluno(aluno);
                         try {
@@ -100,6 +117,7 @@ public class App implements Runnable{
                             objeto.close();
                             
                             System.out.println("Dados foram escritos no arquivo com sucesso.");
+                            JOptionPane.showMessageDialog(frame, "Aluno cadastrado com sucesso!");
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -129,6 +147,23 @@ public class App implements Runnable{
                 Cadastrar.addActionListener(new ActionListener() { // Adicionando um evento ao botão Cadastrar que Salva o nome do professor em um arquivo file.txt
                     public void actionPerformed(ActionEvent e) {
                         String nome = NomeTurma.getText();
+                        if (nome.equals("")) { // Tratamento de erros
+                            JOptionPane.showMessageDialog(frame, "Nome da turma não pode ser vazio.");
+                            return;
+                        }
+                        else if (nome.length() > 50) {
+                            JOptionPane.showMessageDialog(frame, "Nome da turma não pode ter mais de 50 caracteres.");
+                            return;
+                        }
+                        else if (nome.length() < 2) {
+                            JOptionPane.showMessageDialog(frame, "Nome da turma não pode ter menos de 2 caracteres.");
+                            return;
+                        }
+
+                        else if (nome.equals(" ")) {
+                            JOptionPane.showMessageDialog(frame, "Nome da turma não pode ser vazio.");
+                            return;
+                        }
                         Turmas turma = new Turmas(nome);
                         Faculdade.addTurma(turma);
                         try {
@@ -145,6 +180,7 @@ public class App implements Runnable{
                             objeto.close();
                             
                             System.out.println("Dados foram escritos no arquivo com sucesso.");
+                            JOptionPane.showMessageDialog(frame, "Turma cadastrada com sucesso!");
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -180,6 +216,23 @@ public class App implements Runnable{
                 Cadastrar.addActionListener(new ActionListener() { // Adicionando um evento ao botão Cadastrar que Salva o nome do professor em um arquivo file.txt
                     public void actionPerformed(ActionEvent e) {
                         String nome = NomeProfessor.getText();
+                        if (nome.equals("")) { // Tratamento de erros
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ser vazio.");
+                            return;
+                        }
+                        else if (nome.length() > 50) {
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ter mais de 50 caracteres.");
+                            return;
+                        }
+                        else if (nome.length() < 3) {
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ter menos de 3 caracteres.");
+                            return;
+                        }
+
+                        else if (nome.equals(" ")) {
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ser vazio.");
+                            return;
+                        }
                         Professor professor = new Professor(nome);
                         Faculdade.addProfessor(professor);
                         try {
@@ -196,6 +249,7 @@ public class App implements Runnable{
                             objeto.close();
                             
                             System.out.println("Dados foram escritos no arquivo com sucesso.");
+                            JOptionPane.showMessageDialog(frame, "Professor cadastrado com sucesso!");
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -283,6 +337,10 @@ public class App implements Runnable{
         JMenuItem addAlunoT = new JMenuItem("Adicionar Aluno a Turma"); // Adicionando um aluno a uma turma
         addAlunoT.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+                if (Faculdade.getAlunos().isEmpty() || Faculdade.getTurmas().isEmpty()) { //Tratamento de erro para caso não haja alunos ou turmas cadastrados
+                    JOptionPane.showMessageDialog(frame, "Não há alunos ou turmas cadastrados. Por favor, antes faça o cadastro.");
+                    return;
+                }
                 JFrame frame = new JFrame("Adicionar Aluno a Turma");
                 JPanel panel = new JPanel();
                 panel.setLayout(new GridLayout(0,2,5,5));
@@ -296,9 +354,24 @@ public class App implements Runnable{
                 Adicionar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         int codigoAluno = Integer.parseInt(CodigoAluno.getText());
+                        if (Faculdade.getAluno(codigoAluno) == null) { //Tratamento de erro caso o aluno não exista
+                            JOptionPane.showMessageDialog(frame, "Aluno não encontrado.");
+                            return;
+                        }
                         int codigoTurma = Integer.parseInt(CodigoTurma.getText());
+                        if (Faculdade.getTurma(codigoTurma) == null) { //Tratamento de erro caso a turma não exista
+                            JOptionPane.showMessageDialog(frame, "Turma não encontrada.");
+                            return;
+                        }
+                        
+
                         Aluno aluno = Faculdade.getAluno(codigoAluno);
                         Turmas turma = Faculdade.getTurma(codigoTurma);
+                        if (turma.hasAluno(aluno)) { //Tratamento de erro caso o aluno já esteja na turma
+                            JOptionPane.showMessageDialog(frame, "Aluno já está matriculado na turma.");
+                            return;
+                        }
+
                         turma.adicionarAluno(aluno);
                         try {
                             // Criar um FileOutputStream para escrever dados em um arquivo
@@ -314,6 +387,7 @@ public class App implements Runnable{
                             objeto.close();
                             
                             System.out.println("Dados foram escritos no arquivo com sucesso.");
+                            JOptionPane.showMessageDialog(frame, "Aluno adicionado a turma com sucesso!");
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -386,6 +460,10 @@ public class App implements Runnable{
         JMenuItem addProfessorT = new JMenuItem("Adicionar Professor a Turma"); // Botao para adicionar um professor a uma turma
         addProfessorT.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+                if (Faculdade.getProfessores().isEmpty() || Faculdade.getTurmas().isEmpty()) { //Tratamento de erro caso não haja professores ou turmas cadastrados
+                    JOptionPane.showMessageDialog(frame, "Não há professores ou turmas cadastrados. Por favor, antes faça o cadastro.");
+                    return;
+                }
                 JFrame frame = new JFrame("Adicionar Professor a Turma");
                 JPanel panel = new JPanel();
                 panel.setLayout(new GridLayout(0,2,5,5));
@@ -399,9 +477,21 @@ public class App implements Runnable{
                 Adicionar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         int codigoProfessor = Integer.parseInt(CodigoProfessor.getText());
+                        if (Faculdade.getProfessor(codigoProfessor) == null) { //Tratamento de erro caso o professor não exista
+                            JOptionPane.showMessageDialog(frame, "Professor não encontrado.");
+                            return;
+                        }
                         int codigoTurma = Integer.parseInt(CodigoTurma.getText());
+                        if (Faculdade.getTurma(codigoTurma) == null) { //Tratamento de erro caso a turma não exista
+                            JOptionPane.showMessageDialog(frame, "Turma não encontrada.");
+                            return;
+                        }
                         Professor professor = Faculdade.getProfessor(codigoProfessor);
                         Turmas turma = Faculdade.getTurma(codigoTurma);
+                        if (turma.getCodigoProfessor() != 0) { //Tratamento de erro caso a turma já tenha um professor
+                            JOptionPane.showMessageDialog(frame, "Turma já possui um professor. Caso deseje mudar o professor, vá a aba Editar.");
+                            return;
+                        }
                         turma.setCodigoProfessor(codigoProfessor);
                         try {
                             // Criar um FileOutputStream para escrever dados em um arquivo
@@ -417,6 +507,7 @@ public class App implements Runnable{
                             objeto.close();
                             
                             System.out.println("Dados foram escritos no arquivo com sucesso.");
+                            JOptionPane.showMessageDialog(frame, "Professor adicionado a turma com sucesso!");
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
