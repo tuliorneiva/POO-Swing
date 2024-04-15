@@ -128,7 +128,7 @@ public class Faculdade {
     @SuppressWarnings("unchecked")
     public static void loadAlunos() {
         try {
-            FileInputStream fileInputStream = new FileInputStream("alunos.txt"); // Use o nome correto do arquivo
+            FileInputStream fileInputStream = new FileInputStream("Alunos.txt"); // Use o nome correto do arquivo
             ObjectInputStream dataInputStream = new ObjectInputStream(fileInputStream);
             alunos = (ArrayList<Aluno>) dataInputStream.readObject();
             dataInputStream.close();
