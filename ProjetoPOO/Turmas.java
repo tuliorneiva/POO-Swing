@@ -34,6 +34,10 @@ public class Turmas implements Serializable {
         return alunos;
     }
 
+    public Professor getProfessor(){
+        return Faculdade.getProfessor(codigoProfessor);
+    }
+
     public Aluno getCodigoAluno(Aluno a){
         return alunos.get(a.getCodigoAluno());
     }
