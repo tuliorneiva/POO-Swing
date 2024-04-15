@@ -38,6 +38,10 @@ public class Turmas implements Serializable {
         return alunos.get(a.getCodigoAluno());
     }
 
+    public int setCodigoProfessor(int codigoProfessor){
+        return this.codigoProfessor = codigoProfessor;
+    }
+
     public int getCodigoTurmas(){
         return codigoTurmas;
     }
@@ -52,6 +56,7 @@ public class Turmas implements Serializable {
         sb.append("Nome da turma: ").append(nomeTurma).append("\n");
         sb.append("Código da turma: ").append(codigoTurmas).append("\n");
         sb.append("Alunos Matriculados: ").append(alunos.toString()).append("\n"); // Retorna o ArrayList de alunos matriculados
+        sb.append("Professor - ").append(Faculdade.getProfessor(codigoProfessor)).append("\n");
         return sb.toString();
     }
 

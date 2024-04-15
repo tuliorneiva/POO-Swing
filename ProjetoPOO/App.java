@@ -217,6 +217,8 @@ public class App implements Runnable{
             }
         });
 
+
+        //BOTÕES DE EDIÇÃO
         JMenuItem editAluno = new JMenuItem("Editar Aluno");
         JMenuItem editTurma = new JMenuItem("Editar Turma");
         JMenuItem editProfessor = new JMenuItem("Editar Professor");
@@ -381,7 +383,108 @@ public class App implements Runnable{
             }
         });
 
-        JMenuItem addProfessorT = new JMenuItem("Adicionar Professor a Turma");
+        JMenuItem addProfessorT = new JMenuItem("Adicionar Professor a Turma"); // Botao para adicionar um professor a uma turma
+        addProfessorT.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                JFrame frame = new JFrame("Adicionar Professor a Turma");
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(0,2,5,5));
+
+                JLabel labelP1 = new JLabel("Código do Professor:");
+                JTextField CodigoProfessor = new JTextField();
+                JLabel labelP2 = new JLabel("Código da Turma:");
+                JTextField CodigoTurma = new JTextField();
+
+                JButton Adicionar = new JButton("Adicionar");
+                Adicionar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int codigoProfessor = Integer.parseInt(CodigoProfessor.getText());
+                        int codigoTurma = Integer.parseInt(CodigoTurma.getText());
+                        Professor professor = Faculdade.getProfessor(codigoProfessor);
+                        Turmas turma = Faculdade.getTurma(codigoTurma);
+                        turma.setCodigoProfessor(codigoProfessor);
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("Turmas.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            objeto.writeObject(Faculdade.getTurmas());
+                            System.out.println(professor);
+                            // Fechar o DataOutputStream
+                            objeto.close();
+                            
+                            System.out.println("Dados foram escritos no arquivo com sucesso.");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+                JButton Cancelar = new JButton("Cancelar");
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.dispose();
+                    }
+                });
+
+                JButton ConsultarP = new JButton("Consultar Professores");
+                ConsultarP.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        JFrame frame = new JFrame("Consultar Professores");
+                        JPanel panel = new JPanel();
+                        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                        for(Professor professor : Faculdade.getProfessores()){
+                            JLabel label = new JLabel(professor.toString());
+                            panel.add(label);
+                        }
+                        frame.add(panel);
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+                    }
+                });
+
+                JButton ConsultarT = new JButton("Consultar Turmas");
+                ConsultarT.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        JFrame frame = new JFrame("Consultar Turmas");
+                        JPanel panel = new JPanel();
+                        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                        for (Turmas turmas : Faculdade.getTurmas()) {
+                            String nomeTurma = turmas.getNomeTurma();
+                            Integer codigoTurma = turmas.getCodigoTurmas();
+                            ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
+                            String stringFinal = String.format("<html>%s - Código: %d <br> Lista de Alunos: <br>", nomeTurma, codigoTurma);
+                            
+                            for (Aluno aluno : listaDeAlunos) {
+                                stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
+                            }
+                            
+                            stringFinal += "<br></html>";
+                            JLabel label = new JLabel(stringFinal);
+                            panel.add(label);
+                        }    
+                        frame.add(panel);
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+                    }
+                });
+            
+                panel.add(labelP1);
+                panel.add(CodigoProfessor);
+                panel.add(labelP2);
+                panel.add(CodigoTurma);
+                panel.add(Adicionar);
+                panel.add(Cancelar);
+                panel.add(ConsultarP);
+                panel.add(ConsultarT);
+                frame.add(panel);
+                frame.setSize(500, 300);
+                frame.setVisible(true);
+            }
+        });
+
         JMenuItem addNota = new JMenuItem("Adicionar Nota a aluno");
 
         
@@ -400,8 +503,6 @@ public class App implements Runnable{
         addMenu.add(addAlunoT);
         addMenu.add(addProfessorT);
         addMenu.add(addNota);
-
-        // removeMenu.add();
 
 
         frame.setSize(1000, 1000);
