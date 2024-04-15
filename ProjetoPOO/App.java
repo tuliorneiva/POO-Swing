@@ -302,8 +302,9 @@ public class App implements Runnable{
                     String nomeTurma = turmas.getNomeTurma();
                     Integer codigoTurma = turmas.getCodigoTurmas();
                     ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
-                    String stringFinal = String.format("<html>%s - Código: %d <br> Lista de Alunos: <br>", nomeTurma, codigoTurma);
-                    
+                    String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
+                    String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
+                                
                     for (Aluno aluno : listaDeAlunos) {
                         stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
                     }
@@ -426,8 +427,9 @@ public class App implements Runnable{
                             String nomeTurma = turmas.getNomeTurma();
                             Integer codigoTurma = turmas.getCodigoTurmas();
                             ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
-                            String stringFinal = String.format("<html>%s - Código: %d <br> Lista de Alunos: <br>", nomeTurma, codigoTurma);
-                            
+                            String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
+                            String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
+                                                        
                             for (Aluno aluno : listaDeAlunos) {
                                 stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
                             }
@@ -546,8 +548,9 @@ public class App implements Runnable{
                             String nomeTurma = turmas.getNomeTurma();
                             Integer codigoTurma = turmas.getCodigoTurmas();
                             ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
-                            String stringFinal = String.format("<html>%s - Código: %d <br> Lista de Alunos: <br>", nomeTurma, codigoTurma);
-                            
+                            String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
+                            String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
+                                                        
                             for (Aluno aluno : listaDeAlunos) {
                                 stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
                             }
