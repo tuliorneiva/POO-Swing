@@ -326,11 +326,14 @@ public class App implements Runnable{
                 for (Turmas turmas : Faculdade.getTurmas()) {
                     String nomeTurma = turmas.getNomeTurma();
                     Integer codigoTurma = turmas.getCodigoTurmas();
-                    ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
+                    ArrayList<Integer> listaDeAlunos = Faculdade.getTurma(codigoTurma).getAlunos();
                     String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
                     String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
                                 
-                    for (Aluno aluno : listaDeAlunos) {
+                    //erro:
+                    for (Integer codigo : listaDeAlunos) {
+                        Aluno aluno = Faculdade.getAluno(codigo);
+                        NotasMaterias notas = turmas.getNotas(codigo);
                         stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
                     }
                     
@@ -402,14 +405,13 @@ public class App implements Runnable{
                         }
                         
 
-                        Aluno aluno = Faculdade.getAluno(codigoAluno);
                         Turmas turma = Faculdade.getTurma(codigoTurma);
-                        if (turma.hasAluno(aluno)) { //Tratamento de erro caso o aluno já esteja na turma
+                        if (turma.hasAluno(codigoAluno)) { //Tratamento de erro caso o aluno já esteja na turma
                             JOptionPane.showMessageDialog(frame, "Aluno já está matriculado na turma.");
                             return;
                         }
 
-                        turma.adicionarAluno(aluno);
+                        turma.adicionarAluno(codigoAluno);
                         try {
                             // Criar um FileOutputStream para escrever dados em um arquivo
                             FileOutputStream fileOutputStream = new FileOutputStream("Turmas.txt");
@@ -419,7 +421,7 @@ public class App implements Runnable{
                             
                             // Escrever dados no arquivo usando métodos do DataOutputStream
                             objeto.writeObject(Faculdade.getTurmas());
-                            System.out.println(aluno);
+                            System.out.println(Faculdade.getAluno(codigoAluno));
                             // Fechar o DataOutputStream
                             objeto.close();
                             
@@ -484,12 +486,12 @@ public class App implements Runnable{
                         for (Turmas turmas : Faculdade.getTurmas()) {
                             String nomeTurma = turmas.getNomeTurma();
                             Integer codigoTurma = turmas.getCodigoTurmas();
-                            ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
-                            ArrayList<NotasMateria> ListaDeNotas = turmas.getNotas(); 
+                            ArrayList<Integer> listaDeAlunos = turmas.getAlunos();
                             String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
                             String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
                                                         
-                            for (Aluno aluno : listaDeAlunos) {
+                            for (Integer codigo : listaDeAlunos) {
+                                Aluno aluno = Faculdade.getAluno(codigo);
                                 stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
                             }
                             
@@ -628,11 +630,12 @@ public class App implements Runnable{
                         for (Turmas turmas : Faculdade.getTurmas()) {
                             String nomeTurma = turmas.getNomeTurma();
                             Integer codigoTurma = turmas.getCodigoTurmas();
-                            ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
+                            ArrayList<Integer> listaDeAlunos = turmas.getAlunos();
                             String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
                             String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
                                                         
-                            for (Aluno aluno : listaDeAlunos) {
+                            for (Integer codigo : listaDeAlunos) {
+                                Aluno aluno = Faculdade.getAluno(codigo);
                                 stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
                             }
                             
@@ -666,20 +669,37 @@ public class App implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aqui você pode abrir uma caixa de diálogo para solicitar o nome do aluno e a nota
-                String nome = JOptionPane.showInputDialog(null, "Digite o nome do aluno:");
-                String notaStr = JOptionPane.showInputDialog(null, "Digite a nota do aluno:");
-                if (nome != null && notaStr != null) {
-                    try {
-                        Float nota = Float.parseFloat(notaStr);
-                        
-                        NotasMaterias notasmaterias = new NotasMaterias(); // Criando um novo arraylist de notas
-                        JOptionPane.showMessageDialog(null, "A nota foi adicionada com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                JFrame frame = new JFrame("Adicionar Nota a Aluno");
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+                JLabel labelP1 = new JLabel("Código do Aluno:");
+                JTextField CodigoAluno = new JTextField();
+                JLabel labelP2 = new JLabel("Código da Turma:");
+                JTextField CodigoTurma = new JTextField();
+                JLabel labelP3 = new JLabel("Nota:");
+                JTextField Nota = new JTextField();
 
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(null, "A nota deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JButton AdicionarNota = new JButton("Adicionar Nota");
+                AdicionarNota.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int codaluno = Integer.parseInt(CodigoAluno.getText());
+                        int codturma = Integer.parseInt(CodigoTurma.getText());
+                        float nota = Float.parseFloat(Nota.getText());
+
+                        if (Faculdade.getAluno(codaluno) != null) {
+                            try {
+                                Turmas turmas = Faculdade.getTurma(codturma); // pega de algum canto
+                                turmas.addNota(codaluno, nota);
+                                NotasMaterias notasmaterias = new NotasMaterias(); // Criando um novo arraylist de notas
+                                JOptionPane.showMessageDialog(null, "A nota foi adicionada com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(null, "A nota deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
                     }
-                }
+                });
             }
         });
 
