@@ -11,6 +11,7 @@ public class Turmas implements Serializable {
     private String nomeTurma;
     private static Set<Integer> codigosUtilizados = new HashSet<>();
     private ArrayList<Aluno> alunos = new ArrayList<>();
+    private ArrayList<NotasMateria> NotasMateria = new ArrayList<>();
     @SuppressWarnings("unused")
     private int codigoProfessor; // Depois na aba editar atribuir um professor usando isso 
 
@@ -72,5 +73,11 @@ public class Turmas implements Serializable {
         sb.append("Professor - ").append(Faculdade.getProfessor(codigoProfessor)).append("\n");
         return sb.toString();
     }
+
+    public ArrayList<NotasMateria> getNotas() {
+        return NotasMateria;
+    }
+
+   
 
 }

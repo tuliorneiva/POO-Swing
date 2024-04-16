@@ -427,6 +427,7 @@ public class App implements Runnable{
                             String nomeTurma = turmas.getNomeTurma();
                             Integer codigoTurma = turmas.getCodigoTurmas();
                             ArrayList<Aluno> listaDeAlunos = turmas.getAlunos();
+                            ArrayList<NotasMateria> ListaDeNotas = turmas.getNotas(); 
                             String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
                             String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
                                                         
@@ -580,6 +581,27 @@ public class App implements Runnable{
         });
 
         JMenuItem addNota = new JMenuItem("Adicionar Nota a aluno");
+
+        addNota.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aqui você pode abrir uma caixa de diálogo para solicitar o nome do aluno e a nota
+                String nome = JOptionPane.showInputDialog(null, "Digite o nome do aluno:");
+                String notaStr = JOptionPane.showInputDialog(null, "Digite a nota do aluno:");
+                if (nome != null && notaStr != null) {
+                    try {
+                        Float nota = Float.parseFloat(notaStr);
+                        
+                        NotasMaterias notasmaterias = new NotasMaterias(); // Criando um novo arraylist de notas
+                        JOptionPane.showMessageDialog(null, "A nota foi adicionada com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "A nota deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
 
         
         fileMenu.add(newAluno);
