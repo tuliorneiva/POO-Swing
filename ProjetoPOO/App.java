@@ -281,8 +281,22 @@ public class App implements Runnable{
         consultAlunos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 JFrame frame = new JFrame("Consultar Alunos");
-                JPanel panel = new JPanel();
+                JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                        Image image = imageIcon.getImage();
+                        Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                        imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                        g.drawImage(imageIcon.getImage(), 0, 0, null);
+                    
+                    }
+                };
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                
+
+
                 for(Aluno aluno : Faculdade.getAlunos()){
                     JLabel label = new JLabel(aluno.toString());
                     panel.add(label);
@@ -296,7 +310,18 @@ public class App implements Runnable{
         consultTurmas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 JFrame frame = new JFrame("Consultar Turmas");
-                JPanel panel = new JPanel();
+                JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                        Image image = imageIcon.getImage();
+                        Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                        imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                        g.drawImage(imageIcon.getImage(), 0, 0, null);
+                    
+                    }
+                };
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 for (Turmas turmas : Faculdade.getTurmas()) {
                     String nomeTurma = turmas.getNomeTurma();
@@ -323,7 +348,18 @@ public class App implements Runnable{
         consultProfessores.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 JFrame frame = new JFrame("Consultar Professores");
-                JPanel panel = new JPanel();
+                JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                        Image image = imageIcon.getImage();
+                        Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                        imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                        g.drawImage(imageIcon.getImage(), 0, 0, null);
+                    
+                    }
+                };
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 for(Professor professor : Faculdade.getProfessores()){
                     JLabel label = new JLabel(professor.toString());
@@ -405,7 +441,18 @@ public class App implements Runnable{
                 ConsultarA.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         JFrame frame = new JFrame("Consultar Alunos");
-                        JPanel panel = new JPanel();
+                        JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                            @Override
+                            protected void paintComponent(Graphics g) {
+                                super.paintComponent(g);
+                                ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                                Image image = imageIcon.getImage();
+                                Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                                imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                                g.drawImage(imageIcon.getImage(), 0, 0, null);
+                            
+                            }
+                        };
                         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                         for(Aluno aluno : Faculdade.getAlunos()){
                             JLabel label = new JLabel(aluno.toString());
@@ -421,7 +468,18 @@ public class App implements Runnable{
                 ConsultarT.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         JFrame frame = new JFrame("Consultar Turmas");
-                        JPanel panel = new JPanel();
+                        JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                            @Override
+                            protected void paintComponent(Graphics g) {
+                                super.paintComponent(g);
+                                ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                                Image image = imageIcon.getImage();
+                                Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                                imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                                g.drawImage(imageIcon.getImage(), 0, 0, null);
+                            
+                            }
+                        };
                         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                         for (Turmas turmas : Faculdade.getTurmas()) {
                             String nomeTurma = turmas.getNomeTurma();
@@ -527,7 +585,18 @@ public class App implements Runnable{
                 ConsultarP.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         JFrame frame = new JFrame("Consultar Professores");
-                        JPanel panel = new JPanel();
+                        JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                            @Override
+                            protected void paintComponent(Graphics g) {
+                                super.paintComponent(g);
+                                ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                                Image image = imageIcon.getImage();
+                                Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                                imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                                g.drawImage(imageIcon.getImage(), 0, 0, null);
+                            
+                            }
+                        };
                         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                         for(Professor professor : Faculdade.getProfessores()){
                             JLabel label = new JLabel(professor.toString());
@@ -543,7 +612,18 @@ public class App implements Runnable{
                 ConsultarT.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         JFrame frame = new JFrame("Consultar Turmas");
-                        JPanel panel = new JPanel();
+                        JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                            @Override
+                            protected void paintComponent(Graphics g) {
+                                super.paintComponent(g);
+                                ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                                Image image = imageIcon.getImage();
+                                Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                                imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                                g.drawImage(imageIcon.getImage(), 0, 0, null);
+                            
+                            }
+                        };
                         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                         for (Turmas turmas : Faculdade.getTurmas()) {
                             String nomeTurma = turmas.getNomeTurma();
