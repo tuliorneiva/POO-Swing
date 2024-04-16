@@ -1,6 +1,7 @@
 package ProjetoPOO;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -10,14 +11,18 @@ public class Turmas implements Serializable {
     private int codigoTurmas;
     private String nomeTurma;
     private static Set<Integer> codigosUtilizados = new HashSet<>();
-    private ArrayList<Aluno> alunos = new ArrayList<>();
-    private ArrayList<NotasMateria> NotasMateria = new ArrayList<>();
+    private ArrayList<Integer> alunos = new ArrayList<>();
+    //private ArrayList<NotasMateria> NotasMateria = new ArrayList<>();
+    private HashMap<Integer, NotasMaterias> notas;
+
     @SuppressWarnings("unused")
     private int codigoProfessor; // Depois na aba editar atribuir um professor usando isso 
 
     public Turmas(){}
 
     public Turmas(String nomeTurma) {
+
+
         Random random = new Random();
         this.nomeTurma = nomeTurma;
         do {
@@ -27,20 +32,16 @@ public class Turmas implements Serializable {
         codigosUtilizados.add(codigoTurmas); // Adiciona o novo código ao conjunto de códigos utilizados
     }
 
-    public void adicionarAluno(Aluno aluno){
+    public void adicionarAluno(Integer aluno){
         alunos.add(aluno);
     }
 
-    public ArrayList<Aluno> getAlunos() {
+    public ArrayList<Integer> getAlunos() {
         return alunos;
     }
 
     public Professor getProfessor(){
         return Faculdade.getProfessor(codigoProfessor);
-    }
-
-    public Aluno getCodigoAluno(Aluno a){
-        return alunos.get(a.getCodigoAluno());
     }
 
     public int setCodigoProfessor(int codigoProfessor){
@@ -59,9 +60,34 @@ public class Turmas implements Serializable {
         return nomeTurma;
     }
 
-
-    public boolean hasAluno(Aluno aluno) {
+    public boolean hasAluno(int aluno) {
         return alunos.contains(aluno);
+    }
+
+    
+    public HashMap<Integer, NotasMaterias> getNotas() {
+        return notas;
+    }
+
+    public NotasMaterias getNotas(int codigoAluno) {
+        return notas.get(codigoAluno);
+    }
+
+
+  public void addNota(int codigoAluno, float nota){
+        // Verifica se a matéria já foi adicionada
+        if (!notas.containsKey(codigoAluno))
+            return;
+        notas.get(codigoAluno).adicionarNotasMateria(nota);
+    }
+
+    public void removeNota(int codigoAluno, int i){
+        notas.get(codigoAluno).removeNota(i);
+    }
+
+    public void alterarNota(int codigoAluno, float novaNota){
+        // verificar se o aluno já tem nota
+        notas.get(codigoAluno).adicionarNotasMateria(novaNota);
     }
 
     @Override
@@ -73,11 +99,5 @@ public class Turmas implements Serializable {
         sb.append("Professor - ").append(Faculdade.getProfessor(codigoProfessor)).append("\n");
         return sb.toString();
     }
-
-    public ArrayList<NotasMateria> getNotas() {
-        return NotasMateria;
-    }
-
-   
 
 }
