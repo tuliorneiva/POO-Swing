@@ -888,6 +888,45 @@ public class App implements Runnable{
                     }
                 });
 
+                JButton ConsultarT = new JButton("Consultar Turmas");
+                ConsultarT.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        JFrame frame = new JFrame("Consultar Turmas");
+                        JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                            @Override
+                            protected void paintComponent(Graphics g) {
+                                super.paintComponent(g);
+                                ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                                Image image = imageIcon.getImage();
+                                Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH);
+                                imageIcon = new ImageIcon(newimg);
+                                g.drawImage(imageIcon.getImage(), 0, 0, null);
+                            
+                            }
+                        };
+                        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                        for (Turmas turmas : Faculdade.getTurmas()) {
+                            String nomeTurma = turmas.getNomeTurma();
+                            Integer codigoTurma = turmas.getCodigoTurmas();
+                            ArrayList<Integer> listaDeAlunos = turmas.getAlunos();
+                            String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
+                            String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
+                                                        
+                            for (Integer codigo : listaDeAlunos) {
+                                Aluno aluno = Faculdade.getAluno(codigo);
+                                stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
+                            }
+                            
+                            stringFinal += "<br></html>";
+                            JLabel label = new JLabel(stringFinal);
+                            panel.add(label);
+                        }    
+                        frame.add(panel);
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+                    }
+                });
+
                 panel.add(labelP1);
                 panel.add(CodigoAluno);
                 panel.add(labelP2);
@@ -896,6 +935,7 @@ public class App implements Runnable{
                 panel.add(Nota);
                 panel.add(AdicionarNota);
                 panel.add(Cancelar);
+                panel.add(ConsultarT);
                 frame.add(panel);
                 frame.setSize(500, 300);
                 frame.setVisible(true);
