@@ -1,8 +1,9 @@
 package ProjetoPOO;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // classe para obter o arraylist das notas:
-public class NotasMaterias {
+public class NotasMaterias implements Serializable{
     private ArrayList<Float> notasMaterias;
 
     // Construtor
@@ -24,4 +25,8 @@ public class NotasMaterias {
         notasMaterias.remove(nota);
     }
 
+    // preciso adicionar um toString aqui?
+    public String toString(){
+        return notasMaterias.toString();
+    }
 }
