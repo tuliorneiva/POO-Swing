@@ -271,6 +271,97 @@ public class App implements Runnable{
 
         //BOTÕES DE EDIÇÃO
         JMenuItem editAluno = new JMenuItem("Editar Aluno");
+        editAluno.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                if (Faculdade.getAlunos().isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Não há alunos cadastrados. Por favor, antes faça o cadastro.");
+                    return;
+                }
+                JFrame frame = new JFrame("Editar Aluno");
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(0,2,5,5));
+
+                JLabel labela1 = new JLabel("Código do Aluno:");
+                JTextField codigoAluno = new JTextField();
+                
+                JLabel labela2 = new JLabel("Novo nome do Aluno");
+                JTextField novoNome = new JTextField();
+
+
+                JButton Editar = new JButton("Editar");
+                Editar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int codigo = Integer.parseInt(codigoAluno.getText());
+                        String nome = novoNome.getText();
+                        Aluno aluno = Faculdade.getAluno(codigo);
+                        aluno.setNome(nome);
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("Alunos.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            objeto.writeObject(Faculdade.getAlunos());
+                            System.out.println(aluno);
+                            // Fechar o
+                            objeto.close();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        JOptionPane.showMessageDialog(frame, "Aluno editado com sucesso!");
+                    }
+                });
+                JButton Remover = new JButton("Remover Aluno");
+                JButton ConsultarA = new JButton("Consultar Alunos");
+                ConsultarA.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        JFrame frame = new JFrame("Consultar Alunos");
+                        JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                            @Override
+                            protected void paintComponent(Graphics g) {
+                                super.paintComponent(g);
+                                ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                                Image image = imageIcon.getImage();
+                                Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                                imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                                g.drawImage(imageIcon.getImage(), 0, 0, null);
+                            
+                            }
+                        };
+                        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                        for(Aluno aluno : Faculdade.getAlunos()){
+                            JLabel label = new JLabel(aluno.toString());
+                            panel.add(label);
+                        }
+                        frame.add(panel);
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+                    }
+                });
+                JButton Cancelar = new JButton("Cancelar");
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.dispose();
+                    }
+                });
+
+
+                panel.add(labela1);
+                panel.add(codigoAluno);
+                panel.add(labela2);
+                panel.add(novoNome);
+                panel.add(Editar);
+                panel.add(Remover);
+                panel.add(ConsultarA);
+                panel.add(Cancelar);
+                frame.add(panel);
+                frame.setSize(500, 250);
+                frame.setVisible(true);
+            }
+        });
+
         JMenuItem editTurma = new JMenuItem("Editar Turma");
         JMenuItem editProfessor = new JMenuItem("Editar Professor");
         editProfessor.addActionListener(new ActionListener() {
