@@ -28,6 +28,10 @@ public class Aluno implements Serializable{
         return nome;
     }
 
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
     public ArrayList<String> getMaterias() {
         return materiasCursadas;
     }
