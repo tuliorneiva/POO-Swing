@@ -520,14 +520,29 @@ public class App implements Runnable{
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 
 
+                for (Aluno aluno : Faculdade.getAlunos()) {
+                    String nomeAluno = aluno.getNome();
+                    Integer codAluno = aluno.getCodigoAluno();
+                    // adicione o nome e código do aluno ao painel
+                    panel.add(new JLabel("Nome do Aluno: " + nomeAluno));
+                    panel.add(new JLabel("Código do Aluno: " + codAluno));
 
-                for(Aluno aluno : Faculdade.getAlunos()){
-                    JLabel label = new JLabel(aluno.toString());
-                    panel.add(label);
-                }
-                frame.add(panel);
-                frame.setSize(500, 500);
-                frame.setVisible(true);
+                    for (Turmas turma : Faculdade.getTurmas()) {
+                        if (turma.hasAluno(codAluno)) {
+                            NotasMaterias notas = turma.getNotas(codAluno);
+                            // adiciona as notas do aluno ao painel
+                            panel.add(new JLabel("Notas do aluno em " + turma.getNomeTurma() + ": " + notas.toString()));
+                        }
+                    }
+                    // Adiciona um espaço entre cada aluno
+                    panel.add(Box.createVerticalStrut(10));
+        }
+
+            JScrollPane scrollPane = new JScrollPane(panel);
+            frame.add(scrollPane);
+            frame.setSize(500, 500);
+            frame.setVisible(true);
+
             }
         });
         JMenuItem consultTurmas = new JMenuItem("Consultar Turmas");
