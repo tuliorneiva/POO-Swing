@@ -329,13 +329,21 @@ public class App implements Runnable{
                     ArrayList<Integer> listaDeAlunos = Faculdade.getTurma(codigoTurma).getAlunos();
                     String professor = turmas.getProfessor() != null ? turmas.getProfessor().getNome() : "Nenhum professor atribuído";
                     String stringFinal = String.format("<html>%s - Código: %d <br> Professor: %s <br> Lista de Alunos: <br>", nomeTurma, codigoTurma, professor);
-                                
+                    
+                    
+                    for (Integer codigo : listaDeAlunos) {
+                        Aluno aluno = Faculdade.getAluno(codigo);
+                        stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
+                    }
+
+                    /*
                     //erro:
                     for (Integer codigo : listaDeAlunos) {
                         Aluno aluno = Faculdade.getAluno(codigo);
                         NotasMaterias notas = turmas.getNotas(codigo);
                         stringFinal += String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s - Código: %d<br>", aluno.getNome(), aluno.getCodigoAluno());
                     }
+                    */
                     
                     stringFinal += "<br></html>";
                     
@@ -411,7 +419,10 @@ public class App implements Runnable{
                             return;
                         }
 
+                        
                         turma.adicionarAluno(codigoAluno);
+                        turma.addNota(codigoAluno, Float.parseFloat("0"));
+                    
                         try {
                             // Criar um FileOutputStream para escrever dados em um arquivo
                             FileOutputStream fileOutputStream = new FileOutputStream("Turmas.txt");
@@ -700,6 +711,26 @@ public class App implements Runnable{
                         }
                     }
                 });
+
+
+                JButton Cancelar = new JButton("Cancelar");
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.dispose();
+                    }
+                });
+
+                panel.add(labelP1);
+                panel.add(CodigoAluno);
+                panel.add(labelP2);
+                panel.add(CodigoTurma);
+                panel.add(labelP3);
+                panel.add(Nota);
+                panel.add(AdicionarNota);
+                panel.add(Cancelar);
+                frame.add(panel);
+                frame.setSize(500, 300);
+                frame.setVisible(true);
             }
         });
 

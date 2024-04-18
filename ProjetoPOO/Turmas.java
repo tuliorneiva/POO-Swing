@@ -30,6 +30,7 @@ public class Turmas implements Serializable {
         } while (codigosUtilizados.contains(codigoTurmas));
         
         codigosUtilizados.add(codigoTurmas); // Adiciona o novo código ao conjunto de códigos utilizados
+        this.notas = new HashMap<>();
     }
 
     public void adicionarAluno(Integer aluno){
@@ -73,12 +74,22 @@ public class Turmas implements Serializable {
         return notas.get(codigoAluno);
     }
 
+    
 
-  public void addNota(int codigoAluno, float nota){
-        // Verifica se a matéria já foi adicionada
-        if (!notas.containsKey(codigoAluno))
-            return;
-        notas.get(codigoAluno).adicionarNotasMateria(nota);
+//   public void addNota(int codigoAluno, float nota){
+//         // Verifica se a matéria já foi adicionada
+//         if (!notas.containsKey(codigoAluno))
+//             return;
+//         notas.get(codigoAluno).adicionarNotasMateria(nota);
+//     }
+
+    public void addNota(Integer codigoAluno, Float nota) {
+        NotasMaterias notasMaterias = notas.get(codigoAluno);
+        if (notasMaterias == null) {
+            notasMaterias = new NotasMaterias();
+            notas.put(codigoAluno, notasMaterias);
+        }
+        notasMaterias.adicionarNotasMateria(nota);
     }
 
     public void removeNota(int codigoAluno, int i){
