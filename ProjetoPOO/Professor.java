@@ -16,6 +16,11 @@ public class Professor implements Serializable {
         this.codigoProfessor = random.nextInt(1000);
     }
 
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+
     public String getNome() {
         return nome;
     }

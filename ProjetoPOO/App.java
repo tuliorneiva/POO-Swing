@@ -24,9 +24,6 @@ public class App implements Runnable{
         Faculdade.loadProfessores();
         Faculdade.loadTurmas();
         Faculdade.loadAlunos();
-        System.out.println(Faculdade.getTurmas());
-        System.out.println(Faculdade.getAlunos());
-        System.out.println(Faculdade.getProfessores());
         JFrame frame = new JFrame("Hello World");
         JPanel panel = new JPanel();
 
@@ -276,6 +273,142 @@ public class App implements Runnable{
         JMenuItem editAluno = new JMenuItem("Editar Aluno");
         JMenuItem editTurma = new JMenuItem("Editar Turma");
         JMenuItem editProfessor = new JMenuItem("Editar Professor");
+        editProfessor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (Faculdade.getProfessores().isEmpty()) { //Tratamento de erro para caso não haja professores cadastrados
+                    JOptionPane.showMessageDialog(frame, "Não há professores cadastrados. Por favor, antes faça o cadastro.");
+                    return;
+                }
+                JFrame frame = new JFrame("Editar Professor");
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(0,2,5,5));
+
+                JLabel labelP1 = new JLabel("Código do Professor:");
+                JTextField CodigoProfessor = new JTextField();
+                JLabel labelP2 = new JLabel("(Caso editar) Novo Nome do Professor:");
+                JTextField NovoNomeProfessor = new JTextField();
+
+                JButton Editar = new JButton("Editar Professor");
+                Editar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int codigoProfessor = Integer.parseInt(CodigoProfessor.getText());
+                        if (Faculdade.getProfessor(codigoProfessor) == null) { //Tratamento de erro caso o professor não exista
+                            JOptionPane.showMessageDialog(frame, "Professor não encontrado.");
+                            return;
+                        }
+                        String novoNome = NovoNomeProfessor.getText();
+                        if (novoNome.equals("")) { //Tratamento de erro caso o nome do professor seja vazio
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ser vazio.");
+                            return;
+                        }
+                        else if (novoNome.length() > 50) {
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ter mais de 50 caracteres.");
+                            return;
+                        }
+                        else if (novoNome.length() < 3) {
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ter menos de 3 caracteres.");
+                            return;
+                        }
+
+                        else if (novoNome.equals(" ")) {
+                            JOptionPane.showMessageDialog(frame, "Nome do professor não pode ser vazio.");
+                            return;
+                        }
+                        Professor professor = Faculdade.getProfessor(codigoProfessor);
+                        professor.setNome(novoNome);
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("Professores.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            objeto.writeObject(Faculdade.getProfessores());
+                            System.out.println(professor);
+                            // Fechar o
+                            objeto.close();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        JOptionPane.showMessageDialog(frame, "Professor editado com sucesso!");
+                    }
+                });
+                JButton Cancelar = new JButton("Cancelar");
+                Cancelar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        frame.dispose();
+                    }
+                });
+
+                JButton RemoverP = new JButton("Remover Professor");
+                RemoverP.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int codigoProfessor = Integer.parseInt(CodigoProfessor.getText());
+                        Professor professor = Faculdade.getProfessor(codigoProfessor);
+                        Faculdade.removeProfessor(professor);
+                        
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("Professores.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            objeto.writeObject(Faculdade.getProfessores());
+                            System.out.println(professor);
+                            // Fechar o
+                            objeto.close();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        JOptionPane.showMessageDialog(frame, "Professor removido com sucesso!");
+                    }
+                });
+                
+                JButton ConsultarP = new JButton("Consultar Professores");
+                ConsultarP.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        JFrame frame = new JFrame("Consultar Professores");
+                        JPanel panel = new JPanel(){         //Setando um background pro panel da visualizaçao
+                            @Override
+                            protected void paintComponent(Graphics g) {
+                                super.paintComponent(g);
+                                ImageIcon imageIcon = new ImageIcon("ProjetoPOO/Data/MIT2Tran.png");
+                                Image image = imageIcon.getImage();
+                                Image newimg = image.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // Scale it to the new size
+                                imageIcon = new ImageIcon(newimg);  // Transform it back into an ImageIcon
+                                g.drawImage(imageIcon.getImage(), 0, 0, null);
+                            
+                            }
+                        };
+                        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                        for(Professor professor : Faculdade.getProfessores()){
+                            JLabel label = new JLabel(professor.toString());
+                            panel.add(label);
+                        }
+                        frame.add(panel);
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+                    }
+                });
+
+                panel.add(labelP1);
+                panel.add(CodigoProfessor);
+                panel.add(labelP2);
+                panel.add(NovoNomeProfessor);
+                panel.add(Editar);
+                panel.add(RemoverP);
+                panel.add(ConsultarP);
+                panel.add(Cancelar);
+                frame.add(panel);
+                frame.setSize(500, 250);
+                frame.setVisible(true);
+            }
+        });
+
+        
 
         JMenuItem consultAlunos = new JMenuItem("Consultar Alunos");
         consultAlunos.addActionListener(new ActionListener() {
@@ -698,16 +831,51 @@ public class App implements Runnable{
                         int codturma = Integer.parseInt(CodigoTurma.getText());
                         float nota = Float.parseFloat(Nota.getText());
 
+                        if (Faculdade.getTurma(codturma) == null) {
+                            JOptionPane.showMessageDialog(null, "Turma não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        if (Faculdade.getAluno(codaluno) == null) {
+                            JOptionPane.showMessageDialog(null, "Aluno não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        if (nota < 0 || nota > 10) {
+                            JOptionPane.showMessageDialog(null, "A nota deve ser um número entre 0 e 10.", "Erro", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
                         if (Faculdade.getAluno(codaluno) != null) {
                             try {
-                                Turmas turmas = Faculdade.getTurma(codturma); // pega de algum canto
-                                turmas.addNota(codaluno, nota);
+                                Turmas turma = Faculdade.getTurma(codturma); // pega de algum canto
+                                turma.addNota(codaluno, nota);
                                 NotasMaterias notasmaterias = new NotasMaterias(); // Criando um novo arraylist de notas
                                 JOptionPane.showMessageDialog(null, "A nota foi adicionada com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         
                             } catch (NumberFormatException ex) {
                                 JOptionPane.showMessageDialog(null, "A nota deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
                             }
+
+                            try {
+                                // Criar um FileOutputStream para escrever dados em um arquivo
+                                FileOutputStream fileOutputStream = new FileOutputStream("Turmas.txt");
+            
+                                // Criar um DataOutputStream usando o FileOutputStream
+                                ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                                
+                                // Escrever dados no arquivo usando métodos do DataOutputStream
+                                objeto.writeObject(Faculdade.getTurmas());
+                                // Fechar o DataOutputStream
+                                objeto.close();
+                                
+                                System.out.println("Dados foram escritos no arquivo com sucesso.");
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+
+
+
                         }
                     }
                 });
