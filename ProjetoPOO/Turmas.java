@@ -84,11 +84,12 @@ public class Turmas implements Serializable {
 //     }
 
     public void addNota(Integer codigoAluno, Float nota) {
-        NotasMaterias notasMaterias = notas.get(codigoAluno);
+        NotasMaterias notasMaterias = this.notas.get(codigoAluno);
         if (notasMaterias == null) {
             notasMaterias = new NotasMaterias();
             notas.put(codigoAluno, notasMaterias);
         }
+        notasMaterias.removeNota(0.0f);
         notasMaterias.adicionarNotasMateria(nota);
     }
 
@@ -100,6 +101,11 @@ public class Turmas implements Serializable {
         // verificar se o aluno já tem nota
         notas.get(codigoAluno).adicionarNotasMateria(novaNota);
     }
+
+    public void removeProfessor(){
+        this.codigoProfessor = 0;
+    }
+
 
     @Override
     public String toString() { // Para fazer o método toString a fim de retornar ArrayLists, é necessário fazer de maneira diferente.
