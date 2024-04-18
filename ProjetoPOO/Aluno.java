@@ -68,10 +68,9 @@ public class Aluno implements Serializable{
         for (Turmas turma : Faculdade.getTurmas()) {
             if (turma.hasAluno(getCodigoAluno())) {
                 NotasMaterias notas = turma.getNotas(codigoAluno);
-                sb.append("Nota do aluno: " + turma.getNomeTurma()).append(notas.toString()).append("\n  "); // Retorna o ArrayList de notas dos alunos
+                sb.append("Nota do aluno: " + turma.getNomeTurma()).append(notas.toString()).append("\n  ");
             }
         }
-       
         return sb.toString();
     }
 }
