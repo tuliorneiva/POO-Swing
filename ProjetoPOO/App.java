@@ -314,6 +314,29 @@ public class App implements Runnable{
                     }
                 });
                 JButton Remover = new JButton("Remover Aluno");
+                Remover.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int codigo = Integer.parseInt(codigoAluno.getText());
+                        Aluno aluno = Faculdade.getAluno(codigo);
+                        Faculdade.removeAluno(aluno);
+                        try {
+                            // Criar um FileOutputStream para escrever dados em um arquivo
+                            FileOutputStream fileOutputStream = new FileOutputStream("Alunos.txt");
+        
+                            // Criar um DataOutputStream usando o FileOutputStream
+                            ObjectOutputStream objeto = new ObjectOutputStream(fileOutputStream);
+                            
+                            // Escrever dados no arquivo usando métodos do DataOutputStream
+                            objeto.writeObject(Faculdade.getAlunos());
+                            System.out.println(aluno);
+                            // Fechar o DataOutputStream
+                            objeto.close();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        JOptionPane.showMessageDialog(frame, "Aluno removido com sucesso!");
+                    }
+                });
                 JButton ConsultarA = new JButton("Consultar Alunos");
                 ConsultarA.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
@@ -331,13 +354,31 @@ public class App implements Runnable{
                             }
                         };
                         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                        for(Aluno aluno : Faculdade.getAlunos()){
-                            JLabel label = new JLabel(aluno.toString());
-                            panel.add(label);
-                        }
-                        frame.add(panel);
-                        frame.setSize(500, 500);
-                        frame.setVisible(true);
+                        
+        
+                        for (Aluno aluno : Faculdade.getAlunos()) {
+                            String nomeAluno = aluno.getNome();
+                            Integer codAluno = aluno.getCodigoAluno();
+                            // adicione o nome e código do aluno ao painel
+                            panel.add(new JLabel("Nome do Aluno: " + nomeAluno));
+                            panel.add(new JLabel("Código do Aluno: " + codAluno));
+        
+                            for (Turmas turma : Faculdade.getTurmas()) {
+                                if (turma.hasAluno(codAluno)) {
+                                    NotasMaterias notas = turma.getNotas(codAluno);
+                                    // adiciona as notas do aluno ao painel
+                                    panel.add(new JLabel("Notas do aluno em " + turma.getNomeTurma() + ": " + notas.toString()));
+                                }
+                            }
+                            // Adiciona um espaço entre cada aluno
+                            panel.add(Box.createVerticalStrut(10));
+                }
+        
+                    JScrollPane scrollPane = new JScrollPane(panel);
+                    frame.add(scrollPane);
+                    frame.setSize(500, 500);
+                    frame.setVisible(true);
+        
                     }
                 });
                 JButton Cancelar = new JButton("Cancelar");
@@ -536,7 +577,6 @@ editTurma.addActionListener(new ActionListener() {
         editFrame.setVisible(true);
     }
 });
- //aqui
 
         JMenuItem editProfessor = new JMenuItem("Editar Professor");
         editProfessor.addActionListener(new ActionListener() {
@@ -881,13 +921,31 @@ editTurma.addActionListener(new ActionListener() {
                             }
                         };
                         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                        for(Aluno aluno : Faculdade.getAlunos()){
-                            JLabel label = new JLabel(aluno.toString());
-                            panel.add(label);
-                        }
-                        frame.add(panel);
-                        frame.setSize(500, 500);
-                        frame.setVisible(true);
+                        
+        
+                        for (Aluno aluno : Faculdade.getAlunos()) {
+                            String nomeAluno = aluno.getNome();
+                            Integer codAluno = aluno.getCodigoAluno();
+                            // adicione o nome e código do aluno ao painel
+                            panel.add(new JLabel("Nome do Aluno: " + nomeAluno));
+                            panel.add(new JLabel("Código do Aluno: " + codAluno));
+        
+                            for (Turmas turma : Faculdade.getTurmas()) {
+                                if (turma.hasAluno(codAluno)) {
+                                    NotasMaterias notas = turma.getNotas(codAluno);
+                                    // adiciona as notas do aluno ao painel
+                                    panel.add(new JLabel("Notas do aluno em " + turma.getNomeTurma() + ": " + notas.toString()));
+                                }
+                            }
+                            // Adiciona um espaço entre cada aluno
+                            panel.add(Box.createVerticalStrut(10));
+                }
+        
+                    JScrollPane scrollPane = new JScrollPane(panel);
+                    frame.add(scrollPane);
+                    frame.setSize(500, 500);
+                    frame.setVisible(true);
+        
                     }
                 });
 
