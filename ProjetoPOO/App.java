@@ -362,7 +362,182 @@ public class App implements Runnable{
             }
         });
 
-        JMenuItem editTurma = new JMenuItem("Editar Turma");
+   // aqui:
+   JMenuItem editTurma = new JMenuItem("Editar Turma");
+
+editTurma.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        if (Faculdade.getTurmas().isEmpty()) { 
+            JOptionPane.showMessageDialog(frame, "Não há turmas cadastradas. Por favor, antes faça o cadastro.");
+            return;
+        }
+
+        // Cria um novo JFrame para a janela de edição da turma
+        JFrame editFrame = new JFrame("Editar Turma");
+        JPanel editPanel = new JPanel();
+        editPanel.setLayout(new GridLayout(0, 2, 5, 5));
+
+        // Adiciona os componentes para editar a turma
+        JLabel labelCodigo = new JLabel("Código da turma:");
+        JTextField codigoTurmas = new JTextField();
+        JLabel labelNovoNome = new JLabel("Novo Nome:");
+        JTextField novoNomeTurma = new JTextField();
+
+        editPanel.add(labelCodigo);
+        editPanel.add(codigoTurmas);
+        editPanel.add(labelNovoNome);
+        editPanel.add(novoNomeTurma);
+
+        JButton editarButton = new JButton("Editar Turma");
+        editarButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int codigo = Integer.parseInt(codigoTurmas.getText());
+
+                // Verifica se a turma existe
+                Turmas turma = Faculdade.getTurma(codigo);
+                if (turma == null) { 
+                    JOptionPane.showMessageDialog(editFrame, "Turma não encontrada.");
+                    return;
+                }
+
+                String novoNome = novoNomeTurma.getText();
+                if (novoNome.isEmpty() || novoNome.trim().length() < 3 || novoNome.trim().length() > 50) {
+                    JOptionPane.showMessageDialog(editFrame, "Nome da turma inválido. Deve ter entre 3 e 50 caracteres.");
+                    return;
+                }
+
+                // Atualiza o nome da turma
+                turma.setNome(novoNome);
+
+                editFrame.dispose();
+
+                // Salva as alterações no arquivo
+                try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Turmas.txt"))) {
+                    out.writeObject(Faculdade.getTurmas());
+                    JOptionPane.showMessageDialog(frame, "Turma editada com sucesso!");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        JButton cancelarButton = new JButton("Cancelar");
+        cancelarButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                editFrame.dispose();
+            } 
+        });
+
+        editPanel.add(editarButton);
+        editPanel.add(cancelarButton);
+
+        // Adiciona botão para remover aluno
+        JButton removeAlunoButton = new JButton("Remover Aluno");
+        removeAlunoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame removeFrame = new JFrame("Remover Aluno");
+                JPanel removePanel = new JPanel();
+                removePanel.setLayout(new GridLayout(0, 2, 5, 5));
+
+                JLabel labelCodigo = new JLabel("Código do Aluno:");
+                JTextField codigoField = new JTextField();
+                JButton removerButton = new JButton("Remover");
+                JButton cancelarButton = new JButton("Cancelar");
+
+                removerButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int codigo = Integer.parseInt(codigoField.getText());
+
+                        // Verifica se o código está associado a um aluno
+                        Aluno aluno = Faculdade.getAluno(codigo);
+                        if (aluno != null) {
+                            Faculdade.removeAluno(aluno);
+                            JOptionPane.showMessageDialog(removeFrame, "Aluno removido com sucesso!");
+                            removeFrame.dispose();
+                            return;
+                        }
+
+                        // Se não encontrar aluno com o código informado
+                        JOptionPane.showMessageDialog(removeFrame, "Não foi encontrado aluno com o código informado.");
+                    }
+                });
+
+                cancelarButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        removeFrame.dispose();
+                    }
+                });
+
+                removePanel.add(labelCodigo);
+                removePanel.add(codigoField);
+                removePanel.add(removerButton);
+                removePanel.add(cancelarButton);
+
+                removeFrame.add(removePanel);
+                removeFrame.pack();
+                removeFrame.setVisible(true);
+            }
+        });
+
+        editPanel.add(removeAlunoButton);
+
+        // Adiciona botão para remover professor
+        JButton removeProfessorButton = new JButton("Remover Professor");
+        removeProfessorButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame removeFrame = new JFrame("Remover Professor");
+                JPanel removePanel = new JPanel();
+                removePanel.setLayout(new GridLayout(0, 2, 5, 5));
+
+                JLabel labelCodigo = new JLabel("Código do Professor:");
+                JTextField codigoField = new JTextField();
+                JButton removerButton = new JButton("Remover");
+                JButton cancelarButton = new JButton("Cancelar");
+
+                removerButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int codigo = Integer.parseInt(codigoField.getText());
+
+                        // Verifica se o código está associado a um professor
+                        Professor professor = Faculdade.getProfessor(codigo);
+                        if (professor != null) {
+                            Faculdade.removeProfessor(professor);
+                            JOptionPane.showMessageDialog(removeFrame, "Professor removido com sucesso!");
+                            removeFrame.dispose();
+                            return;
+                        }
+
+                        // Se não encontrar professor com o código informado
+                        JOptionPane.showMessageDialog(removeFrame, "Não foi encontrado professor com o código informado.");
+                    }
+                });
+
+                cancelarButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        removeFrame.dispose();
+                    }
+                });
+
+                removePanel.add(labelCodigo);
+                removePanel.add(codigoField);
+                removePanel.add(removerButton);
+                removePanel.add(cancelarButton);
+
+                removeFrame.add(removePanel);
+                removeFrame.pack();
+                removeFrame.setVisible(true);
+            }
+        });
+
+        editPanel.add(removeProfessorButton);
+
+        editFrame.add(editPanel);
+        editFrame.pack();
+        editFrame.setVisible(true);
+    }
+});
+ //aqui
+
         JMenuItem editProfessor = new JMenuItem("Editar Professor");
         editProfessor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

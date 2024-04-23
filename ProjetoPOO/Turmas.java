@@ -57,6 +57,10 @@ public class Turmas implements Serializable {
         return codigoTurmas;
     }
 
+    public void setNome(String nome){
+        this.nomeTurma = nome;
+    }
+
     public String getNomeTurma(){
         return nomeTurma;
     }
